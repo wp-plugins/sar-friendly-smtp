@@ -22,7 +22,7 @@ So the history repeats again, I can't find one simple plugin that fits my needs,
 * KISS principle.
 * No third-party libraries for SMTP, uses WordPress core.
 * Respect fields modified by other plugins (i.e. Gravity Forms).
-* Option to enable debug mode (logs communication with your SMTP server in PHP's error_log file, check [FAQ](https://wordpress.org/plugins/sar-friendly-smtp/faq/) for more details).
+* Option to enable debug mode (logs communication between WordPress and your SMTP server in PHP's error_log file, check [FAQ](https://wordpress.org/plugins/sar-friendly-smtp/faq/) for more details).
 * Uses WordPress settings API for settings page, making it secure by default.
 
 = Requirements =
@@ -66,6 +66,8 @@ Gmail/Google Apps (and probably other servers too) only allows you to send email
 = My emails are sent, debug log looks ok, but they're lost in the cyberspace, never reach the destination! Why life is so cruel with me? I'm going to cry! =
 
 Be happy man, life is life... Sending an email sucessfully does not guarantee you that it will reach the destination, an email goes thru many email servers before reach the recipient email inbox. And finally, if your email reach the server that handles the inbox for the destination email address, it's this server who has the last word to decide if your email is going to be delivered to recipient or not.
+
+Lots of things can be considered to reject your emails in destination without any notice: Content of the email triggering spam filters (i.e. too many links in your email content) or recipient server policy, bad reputation of your domain or SMTP IP, missing recommendations (i.e. SPF record)... It's a whole world man!
 
 Services like http://mandrill.com/ or https://sendgrid.com/ can help you to improve your email delivery.
 
