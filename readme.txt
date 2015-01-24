@@ -22,7 +22,7 @@ So the history repeats again, I can't find one simple plugin that fits my needs,
 * KISS principle.
 * No third-party libraries for SMTP, uses WordPress core.
 * Respect fields modified by other plugins (i.e. Gravity Forms).
-* Option to enable debug mode (logs sending process to your server PHP's error_log file).
+* Option to enable debug mode (logs communication with your SMTP server in PHP's error_log file, check [FAQ](https://wordpress.org/plugins/sar-friendly-smtp/faq/) for more details).
 * Uses WordPress settings API for settings page, making it secure by default.
 
 = Requirements =
@@ -46,9 +46,18 @@ This plugin is just a way to tell WordPress something like: "Please dear WordPre
 
 That means that **this plugin don't send you emails**, WordPress sends your emails using **your SMTP server**.
 
-If you're having trouble sending your emails, you can activate the debug mode in settings page and **most of the time** you will find useful information in your PHP error_log file.
+If you're having trouble sending your emails, you can activate the debug mode in settings page. That activates the logging of the communication between WordPress and your SMTP server, and **most of the time** you will find useful information in your PHP error_log file.
 
-If you don't know how to access to that file or you can't see any useful information about the sending process on that log file, **you need to contact with the support staff of your SMTP server**.
+= Where can I find that PHP error log file? = 
+
+The location of the PHP error_log file it's not the same in all servers, because it can be customized by the server admin. In all cases you'll need to use a (S)FTP client to check it. Example of possible locations:
+
+* Some major shared hosting companies (i.e Hostgator), put this file in the root of your site (i.e. /public_html/ ) with the name of error_log
+* Some other shared hostings put it inside of a "logs" directory in the root of your (S)FTP account.
+* And unfortunatelly, there're some hosting companies that don't allow the user to access directly to this error log file. So you'll need to contact your hosting support.
+* If you're using a VPS or dedicated server you know how to find this file! ;) The path of the file anyway is controled by error_log directive in php.ini or if you're using PHP-FPM by php_admin_value[error_log] in your pool .conf file.
+
+If you don't know how to access to that file or you can't see any useful information about the sending process on that log file, **you need to contact with the support staff of your SMTP server** to ask them for the information.
 
 = I'm using Gmail SMTP server and all my emails are sent with my Gmail account address in the from address field even when I have another email in 'From Email Address', why? =
 
