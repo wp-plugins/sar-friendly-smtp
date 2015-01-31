@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: email, smtp, notifications, phpmailer, sendmail, gmail, mandrill, wp_mail
 Requires at least: 3.9.3
 Tested up to: 4.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPL3
 
 A friendly SMTP plugin for WordPress. No third-party, simply using WordPress native possibilities.
@@ -24,6 +24,7 @@ So the history repeats again, I can't find one simple plugin that fits my needs,
 * Respect fields modified by other plugins (i.e. Gravity Forms).
 * Option to enable debug mode (logs communication between WordPress and your SMTP server in PHP's error_log file, check [FAQ](https://wordpress.org/plugins/sar-friendly-smtp/faq/) for more details).
 * Uses WordPress settings API for settings page, making it secure by default.
+* Custom capability for settings access, so you can allow non administrator users to access to the settings page if you need it using [User Role Editor](https://wordpress.org/plugins/user-role-editor/) (or any other similar plugin).
 
 = Requirements =
 
@@ -46,7 +47,10 @@ This plugin is just a way to tell WordPress something like: "Please dear WordPre
 
 That means that **this plugin don't send you emails**, WordPress sends your emails using **your SMTP server**.
 
-If you're having trouble sending your emails, you can activate the debug mode in settings page. That activates the logging of the communication between WordPress and your SMTP server, and **most of the time** you will find useful information in your PHP error_log file.
+If you're having trouble sending your emails, you can activate the debug mode in settings page. That activates the logging of the commands and data between WordPress and your SMTP server, and **most of the time** you will find useful information in your PHP error_log file.
+
+**Remember to turn off Debug Mode when you're done with the troubleshooting to avoid raising your server load by generating unnecessary logs.**
+
 
 = Where can I find that PHP error log file? = 
 
@@ -72,6 +76,11 @@ Lots of things can be considered to reject your emails in destination without an
 Services like http://mandrill.com/ or https://sendgrid.com/ can help you to improve your email delivery.
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Created Miscellaneous Settings section and moved here Debug Mode, plus some other minor changes in settings screen.
+* Added custom capability to allow select what roles/users can access to plugin settings.
 
 = 1.0 =
 
