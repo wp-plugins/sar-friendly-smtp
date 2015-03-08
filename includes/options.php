@@ -7,7 +7,7 @@ add_action( 'admin_init', 'sarfsmtp_settings_init' );
 
 function sarfsmtp_add_admin_menu(  ) { 
 
-	add_options_page( 'SAR Friendly SMTP', 'SAR Friendly SMTP', 'manage_options', 'sar_friendly_smtp', 'sar_friendly_smtp_options_page' );
+	add_options_page( 'SAR Friendly SMTP', 'SAR Friendly SMTP', 'sar_fsmtp_options', 'sar_friendly_smtp', 'sar_friendly_smtp_options_page' );
 
 }
 
@@ -68,7 +68,7 @@ function sarfsmtp_settings_init(  ) {
 		'sarfsmtp_port_setting_render', 
 		'sarfsmtp_settings_page', 
 		'sarfsmtp_sarfsmtp_settings_page_section',
-		array('If your server uses encryption, this should be 587 or 465. If not, standard non encrypted port is 25.')		 
+		array('If your server uses encryption, this should be 587 or 465. If not, standard non encrypted port is 25. (i.e. Gmail and Mandrill uses 587).')		 
 	);
 
 	add_settings_field( 
@@ -77,36 +77,25 @@ function sarfsmtp_settings_init(  ) {
 		'sarfsmtp_encryption_setting_render', 
 		'sarfsmtp_settings_page', 
 		'sarfsmtp_sarfsmtp_settings_page_section',
-		array('When using ecryption, most common setting is SSL.')		 
+		array('When using ecryption, most common setting is TLS. (i.e. Gmail and Mandrill uses TLS).')		 
 
 	);
 
-
-	add_settings_field( 
-		'debug_mode', 
-		__( 'Debug Mode', 'sar-friendly-smtp' ), 
-		'sarfsmtp_debug_mode_setting_render', 
-		'sarfsmtp_settings_page', 
-		'sarfsmtp_sarfsmtp_settings_page_section',
-		array('If you\'re having issues sending your emails, this will help you to find extra information. Error Log adds debug messages to error_log file specified in your PHP settings.') 
-	);
-
+	// Optional settings
 
 	add_settings_section(
-		'sarfsmtp_from_field_section', 
-		__( 'FROM Field Settings', 'sar-friendly-smtp' ), 
-		'sarfsmtp_settings_section_from_field', 
+		'sarfsmtp_optional_fields_section', 
+		__( 'FROM Field Settings (Optional)', 'sar-friendly-smtp' ), 
+		'sarfsmtp_optional_fields_section', 
 		'sarfsmtp_settings_page'
 	);
-
-	// Optional settings from FROM field.
 
 	add_settings_field( 
 		'from_name', 
 		__( 'FROM Name', 'sar-friendly-smtp' ), 
 		'sarfsmtp_from_name_setting_render', 
 		'sarfsmtp_settings_page', 
-		'sarfsmtp_from_field_section',
+		'sarfsmtp_optional_fields_section',
 		array('Name for the email FROM field. Only used if the original email uses your Site Title from Settings -> General.') 
 
 	);
@@ -116,10 +105,27 @@ function sarfsmtp_settings_init(  ) {
 		__( 'FROM Address', 'sar-friendly-smtp' ), 
 		'sarfsmtp_from_address_setting_render', 
 		'sarfsmtp_settings_page', 
-		'sarfsmtp_from_field_section',
+		'sarfsmtp_optional_fields_section',
 		array('Email address for the email FROM field. Only used if the outgoing original message uses default value: wordpress@yourdomain.com') 
 	);
 
+	// Misc. Settings
+
+	add_settings_section(
+		'sarfsmtp_misc_settings_section', 
+		__( 'Miscellaneous Settings', 'sar-friendly-smtp' ), 
+		'sarfsmtp_misc_settings_section', 
+		'sarfsmtp_settings_page'
+	);
+
+	add_settings_field( 
+		'debug_mode', 
+		__( 'Debug Mode', 'sar-friendly-smtp' ), 
+		'sarfsmtp_debug_mode_setting_render', 
+		'sarfsmtp_settings_page', 
+		'sarfsmtp_misc_settings_section',
+		array('Error Log option adds commands and data between WordPress and your SMTP server to PHP error_log file. <a href="https://wordpress.org/plugins/sar-friendly-smtp/faq/" title="SAR Friendly SMTP - FAQ" target="_blank">More information in the plugin\'s FAQ.</a>') 
+	);
 
 }
 
@@ -147,12 +153,11 @@ function sarfsmtp_from_address_setting_render( $args ) {
 
 }
 
-
 function sarfsmtp_username_setting_render( $args ) { 
 
 	global $sarfsmtp_options;
 	?>
-	<input type="text" name="sarfsmtp_settings[username]" value="<?php echo $sarfsmtp_options['username']; ?>">
+	<input type="text" class="regular-text" name="sarfsmtp_settings[username]" value="<?php echo $sarfsmtp_options['username']; ?>">
     <p class="description"><?php echo $args[0] ?></p>
 	<?php
 
@@ -220,18 +225,23 @@ function sarfsmtp_debug_mode_setting_render( $args ) {
 }
 
 
-function sarfsmtp_settings_section_from_field(  ) { 
-
-	echo __( 'These settings are optional and only used if no other plugin using wp_mail() set his own data for these fields. I.e. If you use Gravity Forms, these settings are not used.', 'sar-friendly-smtp' );
-
-}
-
 function sarfsmtp_server_details_section_callback(  ) { 
 
-	echo __( 'These settings are <strong>required</strong>. Be sure to put the correct settings here or your mail send will fail. If you\'re not sure about what values you need to put in eache field, contact your SMTP server support.', 'sar-friendly-smtp' );
+	echo __( 'These settings are <strong>required</strong>. Be sure to put the correct settings here or your mail send will fail. If you\'re not sure about what values you need to put in eache field, contact your SMTP server support. After saving these settings you can test them from Tools -> Send Email Test.', 'sar-friendly-smtp' );
 
 }
 
+function sarfsmtp_optional_fields_section(  ) { 
+
+	echo __( 'These settings are optional and only used if no other plugin using wp_mail() set his own data for these fields. (I.e. If you use Gravity Forms, these settings <strong>will not replace</strong> your FROM name/address for notifications created in Form Settings -> Notifications). If you leave this blank and no other plugin is setting their own info, WordPress default settings will be used for these fields.', 'sar-friendly-smtp' );
+
+}
+
+function sarfsmtp_misc_settings_section(  ) { 
+
+	echo __( 'These settings are optional too. Remember to turn off Debug Mode when you\'re done with the troubleshooting to avoid raising your server load by generating unnecessary logs.' , 'sar-friendly-smtp' );
+
+}
 
 function sar_friendly_smtp_options_page(  ) { 
 
