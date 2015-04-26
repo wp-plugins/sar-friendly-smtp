@@ -3,7 +3,7 @@ Contributors: samuelaguilera
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9E45TMW9JCPRW
 Tags: email, smtp, notifications, phpmailer, sendmail, gmail, mandrill, wp_mail
 Requires at least: 3.9.3
-Tested up to: 4.1.1
+Tested up to: 4.2
 Stable tag: 1.0.6
 License: GPL3
 
@@ -15,13 +15,15 @@ There are A LOT of SMTP plugins for WordPress, some uses third-party libraries w
 
 Most of them overwrites from address and from name fields ALWAYS, breaking functionality of some other plugins that send emails using wp_mail() function.
 
-So the history repeats again, I can't find one simple plugin that fits my needs, so I created one for myself and share it with you in the hope that you'll find it useful (don't forget to give it a good rate if you like!).
+So the history repeats again, I can't find one simple plugin that fits my needs, so I created one for myself and share it with you in the hope that you'll find it useful.
+
+If you're happy with the plugin [please don't forget to give it a good rating](https://wordpress.org/support/view/plugin-reviews/sar-friendly-smtp?filter=5), it will motivate me to keep sharing and improving this plugin (and others).
 
 = Features =
 
 * KISS principle.
 * No third-party libraries for SMTP, uses WordPress core.
-* Respect fields modified by other plugins (i.e. Gravity Forms).
+* Respect fields modified by other plugins (e.g. Gravity Forms).
 * Option to enable debug mode (logs communication between WordPress and your SMTP server in PHP's error_log file, check [FAQ](https://wordpress.org/plugins/sar-friendly-smtp/faq/) for more details).
 * Uses WordPress settings API for settings page, making it secure by default.
 * Custom capability for settings access, so you can allow non administrator users to access to the settings page if you need it using [User Role Editor](https://wordpress.org/plugins/user-role-editor/) (or any other similar plugin).
